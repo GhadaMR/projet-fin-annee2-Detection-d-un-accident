@@ -1,6 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test/auth/signup.dart';
+import 'package:firebase_test/homepage.dart';
 import 'package:flutter/material.dart';
 
+import '../components/custombuttonauth.dart';
 import '../components/textformfield.dart';
 
 class Login extends StatefulWidget {
@@ -15,43 +19,88 @@ class _LoginState extends State<Login> {
   TextEditingController email =TextEditingController();
   TextEditingController password =TextEditingController();
 
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(20),
         child: ListView(children: [
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(height: 130),
-                Center(child: Text("Login", style: TextStyle(fontSize:50, fontWeight:  FontWeight.bold),)),
-                Container(height: 20),
-                Text("email", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
-                Container(height: 20),
-                CustomTextForm(hinttext: 'Enter your email', mycontroller: email,),
-                Container(height: 20),
-                Text("password", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
-                Container(height: 20),
-                CustomTextForm(hinttext: 'Enter your password', mycontroller: password,),
-                Container(height: 10,),
-                Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 20),
-                  alignment: Alignment.topRight,
-                  child: Text(
-                      "Forgot password ?",
-                      textAlign: TextAlign.right ,
-                      style: TextStyle(fontSize: 14)),
-                ),
-          ]),
-          MaterialButton(
-            height: 45,
-            shape:RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ) ,
-            color: Colors.grey[800],
-            textColor: Colors.white,
-            onPressed: (){},child: Text("Login"),),
+          Form(
+            key: formState,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(height: 130),
+                  Center(child: Text("Login", style: TextStyle(fontSize:50, fontWeight:  FontWeight.bold),)),
+                  Container(height: 20),
+                  Text("email", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
+                  Container(height: 20),
+                  CustomTextForm(hinttext: 'Enter your email', mycontroller: email,validator: (val){
+                    if(val== ""){
+                      return "Can't be empty";
+                    }
+                  },),
+                  Container(height: 20),
+                  Text("password", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
+                  Container(height: 20),
+                  CustomTextForm(hinttext: 'Enter your password', mycontroller: password,validator: (val){
+                    if(val== ""){
+                      return "Can't be empty";
+                    }
+                  },),
+                  Container(height: 10,),
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 20),
+                    alignment: Alignment.topRight,
+                    child: Text(
+                        "Forgot password ?",
+                        textAlign: TextAlign.right ,
+                        style: TextStyle(fontSize: 14)),
+                  ),
+            ]),
+          ),
+          CustomButtonAuth(title: "Login",onPressed: ()async {
+            if(formState.currentState!.validate()){
+            try {
+              final credential = await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(
+                  email: email.text,
+                  password: password.text
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            } on FirebaseAuthException catch (e) {
+              if (e.code == 'user-not-found') {
+                print('No user found for that email.');
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.error,
+                  animType: AnimType.rightSlide,
+                  title: 'Error',
+                  desc: 'No user found for that email.',
+                  btnCancelOnPress: () {},
+                  btnOkOnPress: () {},
+                )..show();
+              } else if (e.code == 'wrong-password') {
+                print('Wrong password provided for that user.');
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.error,
+                  animType: AnimType.rightSlide,
+                  title: 'Error',
+                  desc: 'Wrong password provided for that user.',
+                  btnCancelOnPress: () {},
+                  btnOkOnPress: () {},
+                )..show();
+              }
+            }
+          }else{
+              print("not valid");
+            }}),
           Container(height: 100,),
           Center(
             child: InkWell(

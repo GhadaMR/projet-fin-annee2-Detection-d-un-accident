@@ -42,6 +42,9 @@ dependencies:
   firebase_auth: ^4.17.4
   google_sign_in: ^6.2.1
   flutterfire_cli: ^0.1.1+2
+  firebase_app_check: ^0.2.1+14
+  awesome_dialog: ^3.2.0
+
 
 dev_dependencies:
   flutter_test:
