@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,17 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
     child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: <Widget>[
+      IconButton(
+        icon: Icon(Icons.home),
+        iconSize: 40,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        },
+      ),
+      SizedBox(width: 20),
     IconButton(
     icon: Icon(Icons.account_circle),
     iconSize: 40,

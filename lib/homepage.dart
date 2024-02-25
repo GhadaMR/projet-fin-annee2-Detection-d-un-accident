@@ -26,37 +26,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Welcome"),
-        actions: [],
-      ),
-      body: ListView(
-        children: [
-
-          Container(height: 50,),
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:[
-                Text(
-                  'Mode Tracking',
-                  style: TextStyle(
-                    fontSize: 20,
+      body: Padding(
+        padding: EdgeInsets.all(15),
+        child: ListView(
+          children: [
+            Container(height: 10,),
+            Text("Welcome", style: TextStyle(color: Colors.pink[800] , fontSize: 30, fontWeight: FontWeight.bold ),),
+            Container(height: 50,),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[
+                  Text(
+                    'Mode Tracking',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                Switch(
-                  value: false,
-                  onChanged: (bool value) {
-                    // Gérer le changement d'état du Switch
-                  },
-                  activeColor: Colors.pink[800],
-                  inactiveThumbColor: Colors.pink[800],
-                ),
-              ],
-            ),
-          ),
-          ],
+                  Switch(
+                    value: false,
+                    onChanged: (bool value) {
+                      // Gérer le changement d'état du Switch
+                    },
+                    activeColor: Colors.pink[800],
+                    inactiveThumbColor: Colors.pink[800],
+                  ),
+                ],
+              ),
+
+            ],
+        ),
       ),
       bottomNavigationBar: ButtomNavigationBar(),
     );
