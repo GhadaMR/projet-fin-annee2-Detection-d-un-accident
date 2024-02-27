@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> {
     print('User is currently signed out!');
   } else {
     print('User is signed in!');
+    print('User: $user');
     }
    });
   super.initState();

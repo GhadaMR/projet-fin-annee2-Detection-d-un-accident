@@ -21,10 +21,12 @@ class _LoginState extends State<Login> {
 
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: isLoading ? Center(child:CircularProgressIndicator())
+      : Container(
         padding: EdgeInsets.all(20),
         child: ListView(children: [
           Form(
@@ -50,30 +52,34 @@ class _LoginState extends State<Login> {
                       return "Can't be empty";
                     }
                   },),
-                  Container(height: 10,),
-                  Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 20),
-                    alignment: Alignment.topRight,
-                    child: Text(
-                        "Forgot password ?",
-                        textAlign: TextAlign.right ,
-                        style: TextStyle(fontSize: 14)),
-                  ),
+                  Container(height: 40,),
+
             ]),
           ),
           CustomButtonAuth(title: "Login",onPressed: ()async {
             if(formState.currentState!.validate()){
             try {
+              isLoading= true;
+              setState(() {
+
+              });
               final credential = await FirebaseAuth.instance
                   .signInWithEmailAndPassword(
                   email: email.text,
-                  password: password.text
-              );
+                  password: password.text);
+                  isLoading= false;
+                  setState(() {
+
+              });
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage()),
               );
             } on FirebaseAuthException catch (e) {
+              isLoading= false;
+              setState(() {
+
+              });
               if (e.code == 'user-not-found') {
                 print('No user found for that email.');
                 AwesomeDialog(
@@ -100,6 +106,19 @@ class _LoginState extends State<Login> {
             }
           }else{
               print("not valid");
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                animType: AnimType.rightSlide,
+                title: 'Error',
+                desc: "can't be empty.",
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
+              )..show();
+              isLoading= false;
+              setState(() {
+
+              });
             }}),
           Container(height: 100,),
           Center(
@@ -117,7 +136,7 @@ class _LoginState extends State<Login> {
                   ),
                   TextSpan(
                     text: " Register",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.pink[900]),
                   ),
                 ]),
               ),

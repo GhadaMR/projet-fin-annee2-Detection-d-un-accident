@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'components/buttomnavigationbar.dart';
+import '../components/buttomnavigationbar.dart';
 
-class AddContact extends StatefulWidget {
-  const AddContact({super.key});
+class ListContacts extends StatefulWidget {
+  const ListContacts({super.key});
 
   @override
-  State<AddContact> createState() => _AddContactState();
+  State<ListContacts> createState() => _ListContactsState();
 }
 
-class _AddContactState extends State<AddContact> {
+class _ListContactsState extends State<ListContacts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_test/add_contact.dart';
-import 'package:firebase_test/list_contacts.dart';
-import 'package:firebase_test/manage_preference.dart';
-import 'package:firebase_test/profil.dart';
+import 'package:firebase_test/contact/add_contact.dart';
+import 'package:firebase_test/contact/list_contacts.dart';
+import 'package:firebase_test/preferences/manage_preference.dart';
+import 'package:firebase_test/profil/profil.dart';
 import 'package:firebase_test/view_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

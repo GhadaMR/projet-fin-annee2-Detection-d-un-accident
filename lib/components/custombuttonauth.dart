@@ -13,7 +13,7 @@ class CustomButtonAuth extends StatelessWidget {
       shape:RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ) ,
-      color: Colors.grey[800],
+      color: Colors.pink[800],
       textColor: Colors.white,
       onPressed: onPressed,
       child: Text(title),);

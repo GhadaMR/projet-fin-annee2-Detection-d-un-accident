@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../about.dart';
-import '../add_contact.dart';
+import '../contact/add_contact.dart';
 import '../auth/login.dart';
-import '../list_contacts.dart';
-import '../manage_preference.dart';
-import '../profil.dart';
+import '../contact/list_contacts.dart';
+import '../preferences/manage_preference.dart';
+import '../profil/profil.dart';
 import '../view_history.dart';
 
 class ButtomNavigationBar extends StatefulWidget {
