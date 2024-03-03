@@ -10,6 +10,7 @@ import '../components/custombuttonauth.dart';
 import '../components/textformfield.dart';
 import '../homepage.dart';
 import 'list_contacts.dart';
+import 'package:uuid/uuid.dart';
 
 class AddContact extends StatefulWidget {
   const AddContact({super.key});
@@ -21,16 +22,103 @@ class AddContact extends StatefulWidget {
 class _AddContactState extends State<AddContact> {
 
 
+  //TextEditingController id_ContactController = TextEditingController();
+  TextEditingController nomController = TextEditingController();
+  TextEditingController prenomController = TextEditingController();
+  TextEditingController numController = TextEditingController();
+
+
+  bool recoitAlerte = false;
+  bool tracking =false;
+  final id_contact=Uuid().v4();
+
+
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+  CollectionReference conatcts = FirebaseFirestore.instance.collection('contacts');
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
+      appBar: AppBar(
+        title: Text('Add Contact'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Name'),
+            CustomTextForm(hinttext: 'Enter name', mycontroller: nomController,validator: (val){
+              if(val== ""){
+                return "Can't be empty";
+              }
+            },),
+            SizedBox(height: 20),
+            Text('First name'),
+            CustomTextForm(hinttext: 'Enter first name', mycontroller: prenomController,validator: (val){
+              if(val== ""){
+                return "Can't be empty";
+              }
+            },),
+            SizedBox(height: 20),
+            Text('Phone Number'),
+            CustomTextForm(hinttext: 'Enter phone number', mycontroller: numController,validator: (val){
+              if(val== ""){
+                return "Can't be empty";
+              }
+            },),
+            SizedBox(height: 20),
+            Row(children: [
 
-        ],
+              Checkbox(value: recoitAlerte,
+                  onChanged:(bool?value){
+                    setState(() {
+                      recoitAlerte=value??false;
+                    });
+                  }
+              ),
+              Text('Get Alerte'),
+            ],),
+
+            SizedBox(height: 20),
+            Row(
+              children: [
+
+                Checkbox(value: tracking,
+                    onChanged:(bool?value){
+                      setState(() {
+                        tracking=value??false;
+                      });
+                    }
+                ),
+                Text('Tracking'),
+              ],
+            ),
+
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: ()async{
+                try{
+                  final name = nomController.text;
+                  final firstName = prenomController.text;
+                  final phoneNumber = numController.text;
+                  conatcts.add({
+                    'id_contact': id_contact,
+                    'name': name,
+                    'first_name': firstName,
+                    'phone_number': phoneNumber,
+                    'get_alert': recoitAlerte,
+                    'tracking': tracking,
+                  });
+                  print("Contact Added");
+                }catch (error) {
+                  print("Erreur lors de l'ajout du contact: $error");}
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar:ButtomNavigationBar(),
     );;
