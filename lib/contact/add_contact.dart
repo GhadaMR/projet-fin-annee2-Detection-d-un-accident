@@ -103,15 +103,25 @@ class _AddContactState extends State<AddContact> {
                   final name = nomController.text;
                   final firstName = prenomController.text;
                   final phoneNumber = numController.text;
-                  conatcts.add({
-                    'id_contact': id_contact,
-                    'name': name,
-                    'first_name': firstName,
-                    'phone_number': phoneNumber,
-                    'get_alert': recoitAlerte,
-                    'tracking': tracking,
-                  });
-                  print("Contact Added");
+                  if(name.isNotEmpty&&firstName.isNotEmpty&&phoneNumber.isNotEmpty){
+                    setState(() {
+                      conatcts.add({
+                        'id_contact': id_contact,
+                        'name': name,
+                        'first_name': firstName,
+                        'phone_number': phoneNumber,
+                        'get_alert': recoitAlerte,
+                        'tracking': tracking,
+                      });
+                      print("Contact Added");
+                      nomController.text="";
+                      prenomController.text="";
+                      numController.text="";
+                      recoitAlerte=false;
+                      tracking=false;
+                    });
+                  }
+
                 }catch (error) {
                   print("Erreur lors de l'ajout du contact: $error");}
               },
