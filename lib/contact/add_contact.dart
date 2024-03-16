@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/auth/Utilisateur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ import '../components/buttomnavigationbar.dart';
 import '../components/custombuttonauth.dart';
 import '../components/textformfield.dart';
 import '../homepage.dart';
+import 'Contact.dart';
 import 'list_contacts.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,7 +23,7 @@ class AddContact extends StatefulWidget {
 
 class _AddContactState extends State<AddContact> {
 
-
+  @override
   //TextEditingController id_ContactController = TextEditingController();
   TextEditingController nomController = TextEditingController();
   TextEditingController prenomController = TextEditingController();
@@ -32,9 +34,11 @@ class _AddContactState extends State<AddContact> {
   bool tracking =false;
   final id_contact=Uuid().v4();
 
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
   GlobalKey<FormState> formState = GlobalKey<FormState>();
-  CollectionReference conatcts = FirebaseFirestore.instance.collection('contacts');
+  CollectionReference users= FirebaseFirestore.instance.collection('users');
+
 
 
   @override
@@ -43,7 +47,8 @@ class _AddContactState extends State<AddContact> {
       appBar: AppBar(
         title: Text('Add Contact'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+      child:Padding(
         padding: EdgeInsets.all(15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,15 +109,25 @@ class _AddContactState extends State<AddContact> {
                   final firstName = prenomController.text;
                   final phoneNumber = numController.text;
                   if(name.isNotEmpty&&firstName.isNotEmpty&&phoneNumber.isNotEmpty){
-                    setState(() {
-                      conatcts.add({
-                        'id_contact': id_contact,
+                    setState(()async {
+                      DocumentReference docRef =await users.doc(uid).collection('contacts').add({
                         'name': name,
                         'first_name': firstName,
                         'phone_number': phoneNumber,
                         'get_alert': recoitAlerte,
                         'tracking': tracking,
+
                       });
+                      String id_Contact=docRef.id;
+
+                      Contact newContact = Contact(
+                        id_Contact: id_Contact,
+                        nom: name,
+                        prenom: firstName,
+                        num: phoneNumber,
+                        recoitAlerte: recoitAlerte,
+                        tracking: tracking,
+                      );
                       print("Contact Added");
                       nomController.text="";
                       prenomController.text="";
@@ -129,6 +144,7 @@ class _AddContactState extends State<AddContact> {
             ),
           ],
         ),
+      ),
       ),
       bottomNavigationBar:ButtomNavigationBar(),
     );;

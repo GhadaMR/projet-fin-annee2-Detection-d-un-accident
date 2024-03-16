@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../components/buttomnavigationbar.dart';
+import 'Contact.dart';
 import 'ContactEditPage.dart';
 
 class ListContacts extends StatefulWidget {
@@ -12,7 +14,8 @@ class ListContacts extends StatefulWidget {
 }
 
 class _ListContactsState extends State<ListContacts> {
-
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  CollectionReference users= FirebaseFirestore.instance.collection('users');
   List<QueryDocumentSnapshot> contacts=[];
   @override
   void initState() {
@@ -20,12 +23,13 @@ class _ListContactsState extends State<ListContacts> {
     getData();
   }
   getData()async{
-    QuerySnapshot querySnapshot=await FirebaseFirestore.instance.collection("contacts").get();
+    QuerySnapshot querySnapshot=await FirebaseFirestore.instance.collection('users').doc(uid).collection('contacts').get();
     contacts.addAll(querySnapshot.docs);
     setState(() {
     });
 
   }
+  late Contact contact;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,13 +62,24 @@ class _ListContactsState extends State<ListContacts> {
                         child: Row(
                           children: [
                             InkWell(child: Icon(Icons.edit),
-                                    /*onTap: (){
+                                    onTap: (){
+                                      setState(() {
+
+                                        contact = Contact(id_Contact: contacts[i].id,
+                                                  nom: contacts[i]['name'],
+                                                  prenom: contacts[i]['first_name'],
+                                                  num: contacts[i]['phone_number'],
+                                                  recoitAlerte: (contacts[i]['get_alert'] == true) ? true : false,
+                                                  tracking: (contacts[i]['tracking'] == true) ? true : false,
+
+                                        );
+                                      });
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => ContactEditPage(contact: contacts[i],)),
+                                        MaterialPageRoute(builder: (context) => ContactEditPage(contact: contact,)),
                                       );
 
-                                    },*/
+                                    },
                             ),
                           SizedBox(width: 7,),
                             InkWell(child: Icon(Icons.delete),
