@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test/contact/add_contact.dart';
 import 'package:firebase_test/contact/list_contacts.dart';
+import 'package:firebase_test/envoyer_alerte.dart';
 import 'package:firebase_test/preferences/manage_preference.dart';
 import 'package:firebase_test/profil/profil.dart';
 import 'package:firebase_test/view_history.dart';
@@ -57,6 +58,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: ButtomNavigationBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () { Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Timer()),
+        ); },
+        child: Text('Alert') ,
+      ),
     );
   }
 }

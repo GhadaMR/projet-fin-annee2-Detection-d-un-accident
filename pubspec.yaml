@@ -46,6 +46,8 @@ dependencies:
   awesome_dialog: ^3.2.0
   image_picker: ^1.0.7
   uuid: ^4.3.3
+  get: ^4.6.6
+  circular_countdown_timer: ^0.2.3
 
 
 dev_dependencies:

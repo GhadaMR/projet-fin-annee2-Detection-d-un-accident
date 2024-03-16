@@ -81,7 +81,7 @@ class _ListContactsState extends State<ListContacts> {
 
                                     },
                             ),
-                          SizedBox(width: 7,),
+                          SizedBox(width: 15,),
                             InkWell(child: Icon(Icons.delete),
                                     onTap: (){
                               setState(() {

@@ -53,21 +53,31 @@ class _AddContactState extends State<AddContact> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Name'),
+            SizedBox(height: 50,),
+            Text('Name',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold
+                )),
             CustomTextForm(hinttext: 'Enter name', password: false, mycontroller: nomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
-            Text('First name'),
+            Text('First name',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold
+                )),
             CustomTextForm(hinttext: 'Enter first name', password: false, mycontroller: prenomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
-            Text('Phone Number'),
+            Text('Phone Number',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold
+                )),
             CustomTextForm(hinttext: 'Enter phone number', password: false, mycontroller: numController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
@@ -83,7 +93,10 @@ class _AddContactState extends State<AddContact> {
                     });
                   }
               ),
-              Text('Get Alerte'),
+              Text('Get Alerte',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold
+                  )),
             ],),
 
             SizedBox(height: 20),
@@ -97,7 +110,10 @@ class _AddContactState extends State<AddContact> {
                       });
                     }
                 ),
-                Text('Tracking'),
+                Text('Tracking',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    )),
               ],
             ),
 
