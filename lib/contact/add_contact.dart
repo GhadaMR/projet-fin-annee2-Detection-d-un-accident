@@ -54,21 +54,21 @@ class _AddContactState extends State<AddContact> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Name'),
-            CustomTextForm(hinttext: 'Enter name', mycontroller: nomController,validator: (val){
+            CustomTextForm(hinttext: 'Enter name', password: false, mycontroller: nomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
             Text('First name'),
-            CustomTextForm(hinttext: 'Enter first name', mycontroller: prenomController,validator: (val){
+            CustomTextForm(hinttext: 'Enter first name', password: false, mycontroller: prenomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
             Text('Phone Number'),
-            CustomTextForm(hinttext: 'Enter phone number', mycontroller: numController,validator: (val){
+            CustomTextForm(hinttext: 'Enter phone number', password: false, mycontroller: numController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }

@@ -73,28 +73,28 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Username'),
-            CustomTextForm(hinttext: 'Enter username', mycontroller: usernameController,validator: (val){
+            CustomTextForm(hinttext: 'Enter username', password: false, mycontroller: usernameController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
             Text('Email'),
-            CustomTextForm(hinttext: 'Enter email', mycontroller: emailController,validator: (val){
+            CustomTextForm(hinttext: 'Enter email', password: false, mycontroller: emailController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
             Text('Phone Number'),
-            CustomTextForm(hinttext: 'Enter phone number', mycontroller: phoneNumberController,validator: (val){
+            CustomTextForm(hinttext: 'Enter phone number', password: false, mycontroller: phoneNumberController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
             Text('Image URL'),
-            CustomTextForm(hinttext: 'Enter image Url', mycontroller: imageUrlController,validator: (val){
+            CustomTextForm(hinttext: 'Enter image Url', password: false, mycontroller: imageUrlController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }

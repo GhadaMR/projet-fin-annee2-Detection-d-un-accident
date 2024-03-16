@@ -68,7 +68,7 @@ class _SignUpState extends State<SignUp> {
                   Container(height: 20),
                   Text("Username", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
-                  CustomTextForm(hinttext: 'Enter your username', mycontroller: username,validator: (val){
+                  CustomTextForm(hinttext: 'Enter your username', password: false, mycontroller: username,validator: (val){
                     if(val== ""){
                       return "Can't be empty";
                     }
@@ -77,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                   Container(height: 20),
                   Text("Email", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
-                  CustomTextForm(hinttext: 'Enter your email', mycontroller: email,validator: (val){
+                  CustomTextForm(hinttext: 'Enter your email', password: false, mycontroller: email,validator: (val){
                     if(val== ""){
                       return "Can't be empty";
                     }
@@ -85,7 +85,7 @@ class _SignUpState extends State<SignUp> {
                   Container(height: 20),
                   Text("Password", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
-                  CustomTextForm(hinttext: 'Enter your password', mycontroller: password,validator: (val){
+                  CustomTextForm(hinttext: 'Enter your password', password: true, mycontroller: password,validator: (val){
                     if(val== ""){
                       return "Can't be empty";
                     }
@@ -93,7 +93,7 @@ class _SignUpState extends State<SignUp> {
                   Container(height: 20),
                   Text("Phone number", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
-                  CustomTextForm(hinttext: 'Enter your phone number', mycontroller: phoneNumber,validator: (val){
+                  CustomTextForm(hinttext: 'Enter your phone number', password: false, mycontroller: phoneNumber,validator: (val){
                     if(val== ""){
                       return "Can't be empty";
                     }
