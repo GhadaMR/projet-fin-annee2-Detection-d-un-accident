@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
@@ -64,7 +65,7 @@ class _TimerState extends State<Timer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Timer'),
+        title: const Text('Alert',style: TextStyle(fontSize: 35),),
       ),
       body: user!=null
       ?Column(
@@ -125,7 +126,7 @@ class _TimerState extends State<Timer> {
               isReverse: true,
 
               // Handles Animation Direction (true for Reverse Animation, false for Forward Animation).
-              isReverseAnimation: true,
+              isReverseAnimation: false,
 
               // Handles visibility of the Countdown Text.
               isTimerTextShown: true,
@@ -168,7 +169,12 @@ class _TimerState extends State<Timer> {
           SizedBox(
             width:200 ,
             height: 120,
-            child: ElevatedButton(onPressed: () => _controller.pause(),
+            child: ElevatedButton(onPressed: () { _controller.pause();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+              },
               style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.pink[700]),
 
