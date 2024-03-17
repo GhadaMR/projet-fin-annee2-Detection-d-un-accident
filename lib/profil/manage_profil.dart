@@ -76,7 +76,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter username', password: false, mycontroller: usernameController,validator: (val){
+            CustomTextForm(hinttext: 'Enter username',chiffre: TextInputType.text, password: false, mycontroller: usernameController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -86,7 +86,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter email', password: false, mycontroller: emailController,validator: (val){
+            CustomTextForm(hinttext: 'Enter email',chiffre: TextInputType.emailAddress, password: false, mycontroller: emailController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -96,7 +96,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter phone number', password: false, mycontroller: phoneNumberController,validator: (val){
+            CustomTextForm(hinttext: 'Enter phone number',chiffre: TextInputType.number, password: false, mycontroller: phoneNumberController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -106,7 +106,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter image Url', password: false, mycontroller: imageUrlController,validator: (val){
+            CustomTextForm(hinttext: 'Enter image Url',chiffre: TextInputType.text, password: false, mycontroller: imageUrlController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }

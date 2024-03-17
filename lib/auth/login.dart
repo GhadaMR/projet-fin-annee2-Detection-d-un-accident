@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
                   Container(height: 20),
                   Text("email", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
-                  CustomTextForm(hinttext: 'Enter your email', password: false,mycontroller: email,validator: (val){
+                  CustomTextForm(hinttext: 'Enter your email',chiffre: TextInputType.emailAddress, password: false,mycontroller: email,validator: (val){
                     if(val== ""){
                       return "Can't be empty";
                     }
@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
                   Container(height: 20),
                   Text("password", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
-                  CustomTextForm(hinttext: 'Enter your password', password: true ,mycontroller: password,validator: (val){
+                  CustomTextForm(hinttext: 'Enter your password',chiffre: TextInputType.text, password: true ,mycontroller: password,validator: (val){
                     if(val== ""){
                       return "Can't be empty";
                     }

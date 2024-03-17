@@ -57,7 +57,7 @@ class _EditPreferencesState extends State<EditPreferences> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Alarm Duration:'),
-            CustomTextForm(hinttext: 'Enter Alarm Duration', password: false, mycontroller: dureeAlerteController,validator: (val){
+            CustomTextForm(hinttext: 'Enter Alarm Duration',chiffre: TextInputType.number, password: false, mycontroller: dureeAlerteController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }

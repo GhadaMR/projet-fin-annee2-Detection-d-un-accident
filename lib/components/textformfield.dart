@@ -6,11 +6,13 @@ class CustomTextForm extends StatelessWidget {
   final TextEditingController mycontroller ;
   final String? Function(String?)? validator;
   final bool password;
-  const CustomTextForm({super.key, required this.hinttext, required this.mycontroller, required this.validator,required this.password});
+  final TextInputType chiffre;
+  const CustomTextForm({super.key, required this.hinttext, required this.mycontroller, required this.validator,required this.password, required this.chiffre});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: chiffre,
       obscureText: password,
       validator: validator,
       controller: mycontroller,

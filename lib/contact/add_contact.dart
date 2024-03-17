@@ -58,7 +58,7 @@ class _AddContactState extends State<AddContact> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter name', password: false, mycontroller: nomController,validator: (val){
+            CustomTextForm(hinttext: 'Enter name',chiffre: TextInputType.text, password: false, mycontroller: nomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -68,7 +68,7 @@ class _AddContactState extends State<AddContact> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter first name', password: false, mycontroller: prenomController,validator: (val){
+            CustomTextForm(hinttext: 'Enter first name',chiffre: TextInputType.text, password: false, mycontroller: prenomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -78,7 +78,7 @@ class _AddContactState extends State<AddContact> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold
                 )),
-            CustomTextForm(hinttext: 'Enter phone number', password: false, mycontroller: numController,validator: (val){
+            CustomTextForm(hinttext: 'Enter phone number',chiffre: TextInputType.number, password: false, mycontroller: numController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }

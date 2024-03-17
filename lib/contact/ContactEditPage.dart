@@ -33,17 +33,11 @@ class _ContactEditPageState extends State<ContactEditPage> {
 
   }
   Future<void> _updateContactData() async{
-    print("1111");
     String uid=FirebaseAuth.instance.currentUser!.uid;
     print("uid in initState: $uid");
-    print("2222");
     String cid=widget.contact.id_Contact;
-
-    print("3333");
     FirebaseFirestore firestore=FirebaseFirestore.instance;
-    print("4444");
     try{
-      print("5555");
       await firestore.collection('users').doc(uid).collection('contacts').doc(cid).update(
       {
       'name': nomController.text,
@@ -52,12 +46,10 @@ class _ContactEditPageState extends State<ContactEditPage> {
         'get_alert': recoitAlerte,
         'tracking': tracking,
       });
-      print("6666");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Contact data updated successfully')),
       );
     }catch (e) {
-      print("7777");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to update Contact data')),
       );
@@ -96,7 +88,7 @@ class _ContactEditPageState extends State<ContactEditPage> {
             style: TextStyle(
               fontWeight: FontWeight.bold
             ),),
-            CustomTextForm(hinttext: 'Enter name', password: false, mycontroller: nomController,validator: (val){
+            CustomTextForm(hinttext: 'Enter name',chiffre: TextInputType.text, password: false, mycontroller: nomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -106,7 +98,7 @@ class _ContactEditPageState extends State<ContactEditPage> {
               style: TextStyle(
                   fontWeight: FontWeight.bold
               ),),
-            CustomTextForm(hinttext: 'Enter first name', password: false, mycontroller: prenomController,validator: (val){
+            CustomTextForm(hinttext: 'Enter first name',chiffre: TextInputType.text, password: false, mycontroller: prenomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
@@ -116,7 +108,7 @@ class _ContactEditPageState extends State<ContactEditPage> {
               style: TextStyle(
                   fontWeight: FontWeight.bold
               ),),
-            CustomTextForm(hinttext: 'Enter phone number', password: false, mycontroller: numController,validator: (val){
+            CustomTextForm(hinttext: 'Enter phone number',chiffre: TextInputType.number, password: false, mycontroller: numController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
