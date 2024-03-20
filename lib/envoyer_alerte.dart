@@ -1,8 +1,10 @@
+import 'package:background_sms/background_sms.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'auth/Utilisateur.dart';
 
@@ -14,26 +16,35 @@ class Timer extends StatefulWidget {
 }
 
 class _TimerState extends State<Timer> {
-  Utilisateur? user;
+
   //late   int _duration ;
   final CountDownController _controller = CountDownController();
 
+  Utilisateur? user ;
+
   @override
   void initState() {
+    fetchUserData();
+    getData();
     super.initState();
-     fetchUserData();
-    //print("userInitState :${user?.uid}");
-
-
 
   }
 
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  CollectionReference users= FirebaseFirestore.instance.collection('users');
+  List<QueryDocumentSnapshot> contacts=[];
 
+  getData()async{
+    QuerySnapshot querySnapshot=await FirebaseFirestore.instance.collection('users').doc(uid).collection('contacts').get();
+    contacts.addAll(querySnapshot.docs);
+    setState(() {
+    });
 
+  }
 
   Future<void> fetchUserData() async {
-    User? firebaseUser =  FirebaseAuth.instance.currentUser;
-    //print('Current User: $firebaseUser');
+    User? firebaseUser = FirebaseAuth.instance.currentUser;
+    print('Current User: $firebaseUser');
     if (firebaseUser != null) {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
           .collection('users')
@@ -50,15 +61,49 @@ class _TimerState extends State<Timer> {
             password: userData['password'],
             imageUrl: userData['imageUrl'].toString(),
             phoneNumber: userData['phoneNumber'].toString(),
-            dureeAlarme: userData['dureeAlarme'] != null ? int.parse(userData['dureeAlarme']) : 90,);
+            dureeAlarme: userData['dureeAlarme'] != null ? int.parse(userData['dureeAlarme']) : 90,
 
+
+
+          );
         });
-        //_duration=user!.dureeAlarme;
       }
 
     }
-
   }
+
+  String localisation="...";
+
+  late String message="This is a demand 2 of help from ${user?.username}, I'm in the location $localisation";
+
+
+  void requestSmsPermission(String receiver) async {
+    var status = await Permission.sms.status;
+    if (!status.isGranted) {
+      status = await Permission.sms.request();
+      String result = await BackgroundSms.sendMessage(
+          phoneNumber: receiver, message: message) as String;
+      if (result == SmsStatus.sent) {
+        print("Sent");
+      } else {
+        print("Failed");
+      }
+      print("message sent");
+      if (status.isDenied) {
+        print("Persmission denied");
+      }
+    }
+    else{
+      String result = await BackgroundSms.sendMessage(
+          phoneNumber: receiver, message: message) as String;
+      if (result == SmsStatus.sent) {
+        print("Sent");
+      } else {
+        print("Failed");
+      }
+    }
+  }
+
 
 
   @override
@@ -143,6 +188,19 @@ class _TimerState extends State<Timer> {
               // This Callback will execute when the Countdown Ends.
               onComplete: () {
                 // Here, do whatever you want
+                  try{
+                    for(int i=0;i<contacts.length;i++){
+                      requestSmsPermission(contacts[i]['phone_number']);
+                    }
+
+
+
+                  }catch(e){
+                    print("Erreur:  $e");
+                  }
+
+
+
                 debugPrint('Countdown Ended');
                 //fonction to send the alert to the contacts that have getAlert=true
               },

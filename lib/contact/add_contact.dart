@@ -123,7 +123,7 @@ class _AddContactState extends State<AddContact> {
                 try{
                   final name = nomController.text;
                   final firstName = prenomController.text;
-                  final phoneNumber = numController.text;
+                  final phoneNumber = "+216${numController.text}";
                   if(name.isNotEmpty&&firstName.isNotEmpty&&phoneNumber.isNotEmpty){
                     setState(()async {
                       DocumentReference docRef =await users.doc(uid).collection('contacts').add({
