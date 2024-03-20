@@ -35,7 +35,7 @@ class _TimerState extends State<Timer> {
   List<QueryDocumentSnapshot> contacts=[];
 
   getData()async{
-    QuerySnapshot querySnapshot=await FirebaseFirestore.instance.collection('users').doc(uid).collection('contacts').get();
+    QuerySnapshot querySnapshot=await FirebaseFirestore.instance.collection('users').doc(uid).collection('contacts').where('get_alert', isEqualTo: true).get();
     contacts.addAll(querySnapshot.docs);
     setState(() {
     });
@@ -61,7 +61,7 @@ class _TimerState extends State<Timer> {
             password: userData['password'],
             imageUrl: userData['imageUrl'].toString(),
             phoneNumber: userData['phoneNumber'].toString(),
-            dureeAlarme: userData['dureeAlarme'] != null ? int.parse(userData['dureeAlarme']) : 90,
+            dureeAlarme: userData['dureeAlarme'] != null ? int.parse(userData['dureeAlarme']) : 30,
 
 
 
