@@ -9,6 +9,11 @@ import 'package:firebase_test/view_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'components/buttomnavigationbar.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 
 
 class HomePage extends StatefulWidget {
@@ -19,7 +24,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<void> sendAudioFile(String filePath, String fileName) async {
+    print(filePath);
+    print(fileName);
+    var url = Uri.parse('http://10.0.2.2:5000/api/upload_audio');
+    var request = http.MultipartRequest('POST', url);
 
+    // Charger le fichier audio depuis les ressources de l'application
+    var fileContent = await rootBundle.load(filePath);
+
+    // Ajouter le fichier audio à la requête multipart
+    request.files.add(
+      http.MultipartFile.fromBytes(
+        'file',
+        fileContent.buffer.asUint8List(),
+        filename: fileName,
+      ),
+    );
+    print("request: $request");
+    print("fileContent: $fileContent");
+    var response = await request.send();
+    print("response $response");
+
+
+    if (response.statusCode == 200) {
+
+      print('Fichier audio envoyé avec succès');
+      // Get the JSON response from the response stream
+      var jsonResponse = await response.stream.bytesToString();
+      print('JSON Response: $jsonResponse');
+
+      // You can parse the JSON response if needed
+      var decodedResponse = jsonDecode(jsonResponse);
+      print('Decoded Response: $decodedResponse');
+
+      // Handle the JSON data as needed
+    } else {
+      print('Échec de l\'envoi du fichier audio');
+    }
+  }
 
   get onPressed => null;
 
@@ -54,6 +97,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+            ElevatedButton(onPressed: () {
+              String filePath='assets/jsu.mp3';
+              String fileName='jsu.mp3';
+              sendAudioFile(filePath,fileName);
+            },
+                child: const Text('Get Result'))
 
             ],
         ),

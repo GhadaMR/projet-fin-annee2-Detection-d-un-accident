@@ -50,7 +50,7 @@ dependencies:
   circular_countdown_timer: ^0.2.3
   background_sms: ^0.0.4
   permission_handler: ^11.3.0
-
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +70,8 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/logo.png
+    - assets/agd.wav
+    - assets/jsu.mp3
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
