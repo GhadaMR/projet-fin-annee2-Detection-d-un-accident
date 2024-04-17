@@ -54,6 +54,8 @@ dependencies:
   url_launcher: ^6.2.5
   geolocator: ^11.0.0
   webview_flutter: ^4.7.0
+  geocoding: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:
