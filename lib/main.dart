@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: Login(),
       //FirebaseAuth.instance.currentUser == null ? Login() : HomePage(),
     );
   }

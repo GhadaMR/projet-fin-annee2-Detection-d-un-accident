@@ -14,6 +14,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -29,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     print(fileName);
     var url = Uri.parse('http://10.0.2.2:5000/api/upload_audio');
     var request = http.MultipartRequest('POST', url);
+
 
     // Charger le fichier audio depuis les ressources de l'application
     var fileContent = await rootBundle.load(filePath);
@@ -67,7 +70,8 @@ class _HomePageState extends State<HomePage> {
   get onPressed => null;
 
   get icon => null;
-
+  String? _currentAddress;
+  Position? _currentPosition;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +106,21 @@ class _HomePageState extends State<HomePage> {
               String fileName='jsu.mp3';
               sendAudioFile(filePath,fileName);
             },
-                child: const Text('Get Result'))
+                child: const Text('Get Result')),
+
+            Text('LAT: ${_currentPosition?.latitude ?? ""}'),
+            Text('LNG: ${_currentPosition?.longitude ?? ""}'),
+            Text('ADDRESS: ${_currentAddress ?? ""}'),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () async {
+                _currentPosition = await LocationHandler.getCurrentPosition();
+                _currentAddress = await LocationHandler.getAddressFromLatLng(
+                    _currentPosition!);
+                setState(() {});
+              },
+              child: const Text("Get Current Location"),
+            ),
 
             ],
         ),
@@ -117,5 +135,58 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+
+abstract class LocationHandler {
+  static Future<bool> handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print(' Location services are disabled. Please enable the services');
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        print('Location permissions are denied') ;
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      print('Location permissions are permanently denied, we cannot request permissions.') ;
+
+      return false;
+    }
+    print('Location Permission enabled');
+    return true;
+  }
+  static Future<Position?> getCurrentPosition() async {
+    try {
+      final hasPermission = await handleLocationPermission();
+      if (!hasPermission) return null;
+      return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<String?> getAddressFromLatLng(Position position) async {
+    try {
+      List<Placemark> placeMarks =
+      await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placeMarks[0];
+      print("${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode}");
+      return "${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode}";
+    } catch (e) {
+      return null;
+    }
+  }
+
 }
 
