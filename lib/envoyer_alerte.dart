@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'auth/Utilisateur.dart';
 
@@ -71,31 +73,112 @@ class _TimerState extends State<Timer> {
 
     }
   }
+  Future<void> _sendLocation() async {
+    // Vérifier et demander les autorisations de localisation
+    var status = await Permission.location.request();
 
-  String localisation="...";
-
-  late String message="This is a demand 2 of help from ${user?.username}, I'm in the location $localisation";
-
-
-  void requestSmsPermission(String receiver) async {
-    var status = await Permission.sms.status;
     if (!status.isGranted) {
-      status = await Permission.sms.request();
-      String result = await BackgroundSms.sendMessage(
-          phoneNumber: receiver, message: message) as String;
+      // Les autorisations n'ont pas été accordées, afficher une boîte de dialogue pour demander l'autorisation
+      print("Les autorisations n'ont pas été accordées");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Autorisations de localisation"),
+            content: Text(
+                "Pour envoyer votre position, veuillez autoriser l'accès à la localisation."),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  if (await Permission.location.isGranted) {
+                    // Si l'autorisation est accordée après la boîte de dialogue, continuer l'envoi de la position
+                    _sendLocation();
+                  }
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    // Récupérer la latitude et la longitude de la position
+    double latitude = position.latitude;
+    double longitude = position.longitude;
+
+    // Créer le lien Google Maps avec la latitude et la longitude
+    String googleMapsLink = "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
+
+    print(googleMapsLink);
+    // Ouvrir le lien Google Maps dans le navigateur du téléphone
+    // Essayer d'ouvrir l'URL avec différentes méthodes
+    try {
+      // Méthode 1 : Ouvrir l'URL avec `launch`
+      await launch(googleMapsLink);
+      print('launch $googleMapsLink');
+    } catch (e) {
+      print('Could not launch $googleMapsLink');
+      // Gestion des erreurs
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Erreur"),
+            content: Text("Impossible d'ouvrir Google Maps."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+
+    // Envoyer un SMS avec le lien Google Maps au numéro spécifié
+    String message = "Je suis ${user?.username}, j'ai eu un accident. Je me trouve à $googleMapsLink Aidez-moi !!";
+
+    // envoyer le SMS en arrière-plan
+    try{
+      for(int i=0;i<contacts.length;i++){
+        requestSmsPermission(contacts[i]['phone_number'], message );
+      }
+    }catch(e){
+      print("Erreur:  $e");
+    }
+  }
+
+  void requestSmsPermission(String receiver,String message ) async {
+    var status2 = await Permission.sms.status;
+    if (!status2.isGranted) {
+      status2 = await Permission.sms.request();
+      SmsStatus result = await BackgroundSms.sendMessage(
+          phoneNumber: receiver, message: message);
       if (result == SmsStatus.sent) {
         print("Sent");
       } else {
         print("Failed");
       }
       print("message sent");
-      if (status.isDenied) {
+      if (status2.isDenied) {
         print("Persmission denied");
       }
     }
-    else{
-      String result = await BackgroundSms.sendMessage(
-          phoneNumber: receiver, message: message) as String;
+    else {
+      SmsStatus result = await BackgroundSms.sendMessage(
+          phoneNumber: receiver, message: message);
       if (result == SmsStatus.sent) {
         print("Sent");
       } else {
@@ -188,16 +271,9 @@ class _TimerState extends State<Timer> {
               // This Callback will execute when the Countdown Ends.
               onComplete: () {
                 // Here, do whatever you want
-                  try{
-                    for(int i=0;i<contacts.length;i++){
-                      requestSmsPermission(contacts[i]['phone_number']);
-                    }
-
-
-
-                  }catch(e){
-                    print("Erreur:  $e");
-                  }
+                _controller.pause(); // Pause the countdown
+                _sendLocation(); // Send location
+                debugPrint('Countdown Ended');
 
 
 
