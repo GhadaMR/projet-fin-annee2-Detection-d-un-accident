@@ -108,6 +108,19 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
+  Future<String> getRealTimeTrackingLink(double latitude, double longitude) async {
+    // Construire l'URL pour le suivi en temps réel avec la latitude et la longitude
+    String trackingUrl = "https://www.google.com/maps/@$latitude,$longitude,17z";
+    String apiKey = "AIzaSyDSwntoSn6hPDiGF70jIq9fcmmBjsZCSZA";
+    //String trackingUrl = "https://www.google.com/maps/embed/v1/view?key=$apiKey&center=$latitude,$longitude&zoom=17&maptype=roadmap";
+
+    //String iframeCode = '<iframe width="600" height="450" frameborder="0" style="border:0" src="$trackingUrl" allowfullscreen></iframe>';
+
+    return trackingUrl;
+  }
+
+
   Future<void> _sendLocation() async {
     // Vérifier et demander les autorisations de localisation
     var status = await Permission.location.request();
@@ -151,14 +164,17 @@ class _HomePageState extends State<HomePage> {
     // Créer le lien Google Maps avec la latitude et la longitude
     String googleMapsLink = "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
 
+    // Obtenir le lien de suivi en temps réel
+    String realTimeTrackingLink = await getRealTimeTrackingLink(latitude, longitude);
+
     // Ouvrir le lien Google Maps dans le navigateur du téléphone
     // Essayer d'ouvrir l'URL avec différentes méthodes
     try {
       // Méthode 1 : Ouvrir l'URL avec `launch`
-      await launch(googleMapsLink);
-      print('launch $googleMapsLink');
+      await launch(realTimeTrackingLink);
+      print('launch $realTimeTrackingLink');
     } catch (e) {
-      print('Could not launch $googleMapsLink');
+      print('Could not launch $realTimeTrackingLink');
       // Gestion des erreurs
       showDialog(
         context: context,
@@ -182,8 +198,8 @@ class _HomePageState extends State<HomePage> {
 
 
     // Envoyer un SMS avec le lien Google Maps au numéro spécifié
-    String message = "Voici ma position: $googleMapsLink";
-
+    String message = "Voici ma position: $googleMapsLink\nSuivez ma position en temps réel: $realTimeTrackingLink";
+    print(message);
     // envoyer le SMS en arrière-plan
     try{
       for(int i=0;i<contacts.length;i++){
