@@ -112,7 +112,6 @@ class _TimerState extends State<Timer> {
     // Récupérer la latitude et la longitude de la position
     double latitude = position.latitude;
     double longitude = position.longitude;
-
     // Créer le lien Google Maps avec la latitude et la longitude
     String googleMapsLink = "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
 
@@ -149,7 +148,6 @@ class _TimerState extends State<Timer> {
 
     // Envoyer un SMS avec le lien Google Maps au numéro spécifié
     String message = "Je suis ${user?.username}, j'ai eu un accident. Je me trouve à $googleMapsLink Aidez-moi !!";
-
     // envoyer le SMS en arrière-plan
     try{
       for(int i=0;i<contacts.length;i++){
