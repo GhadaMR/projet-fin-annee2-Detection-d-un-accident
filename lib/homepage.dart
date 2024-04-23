@@ -209,10 +209,13 @@ class _HomePageState extends State<HomePage> {
       print("Erreur:  $e");
     }
   }
+
+
+  bool accident=false;
   Future<void> sendAudioFile(String filePath, String fileName) async {
     print(filePath);
     print(fileName);
-    var url = Uri.parse('http://10.0.2.2:5000/api/upload_audio');
+    var url = Uri.parse('http://192.168.1.36:5000/api/upload_audio');
     var request = http.MultipartRequest('POST', url);
 
 
@@ -242,6 +245,19 @@ class _HomePageState extends State<HomePage> {
       // You can parse the JSON response if needed
       var decodedResponse = jsonDecode(jsonResponse);
       print('Decoded Response: $decodedResponse');
+      print("response");
+      print(decodedResponse["message"]);
+      print(decodedResponse["message"] =="The audio represents a car accident.");
+      if(decodedResponse["message"] =="The audio represents a car accident."){
+        setState(() {
+          accident=true;
+        });
+      }
+      else{
+        setState(() {
+          accident=false;
+        });
+      }
 
       // Handle the JSON data as needed
     } else {
@@ -287,10 +303,21 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            ElevatedButton(onPressed: () {
+            ElevatedButton(onPressed: () async{
               String filePath = 'assets/jsu.mp3';
               String fileName = 'jsu.mp3';
-              sendAudioFile(filePath, fileName);
+
+              await sendAudioFile(filePath, fileName);
+              if(accident==true){
+                print("accident =true");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Timer()),
+                );
+              }
+              else{
+                print("accident =false");
+              }
             },
                 child: const Text('Get Result')),
 
