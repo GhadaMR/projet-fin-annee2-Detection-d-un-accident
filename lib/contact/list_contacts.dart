@@ -83,11 +83,24 @@ class _ListContactsState extends State<ListContacts> {
                             ),
                           SizedBox(width: 15,),
                             InkWell(child: Icon(Icons.delete),
-                                    onTap: (){
-                              setState(() {
-                                contacts.removeAt(i);
-                              });
-                                    },
+                              onTap: () async {
+                                // Supprimer l'élément de la base de données Firebase
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(uid)
+                                    .collection('contacts')
+                                    .doc(contacts[i].id)
+                                    .delete()
+                                    .then((value) {
+                                  // Si la suppression dans la base de données réussit,
+                                  // supprimez également l'élément de la liste locale
+                                  setState(() {
+                                    contacts.removeAt(i);
+                                  });
+                                }).catchError((error) {
+                                  print("Erreur lors de la suppression de l'élément : $error");
+                                });
+                              },
                             ),
                           ],
                         ),
