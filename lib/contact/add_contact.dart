@@ -156,7 +156,10 @@ class _AddContactState extends State<AddContact> {
                 }catch (error) {
                   print("Erreur lors de l'ajout du contact: $error");}
               },
-              child: Text('Save'),
+              child: Center(child: Text('Save',style: TextStyle(
+                color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+              ),)),
             ),
           ],
         ),

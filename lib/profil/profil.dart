@@ -78,7 +78,10 @@ class _ViewProfilState extends State<ViewProfil> {
                 SizedBox(height: 10),
                 Text(
                   '${user?.username}',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,
+                color: Colors.green[900], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                  // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+                ),
                 ),
 
                 SizedBox(height: 10),
@@ -102,7 +105,10 @@ class _ViewProfilState extends State<ViewProfil> {
                       MaterialPageRoute(builder: (context) => ProfileEditPage(user: user,)),
                     );
                   },
-                  child: Text('Edit profil'),
+                  child: Text('Edit profil',style: TextStyle(
+                    color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                    // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+                  ),),
                 ),
 
               ],

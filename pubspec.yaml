@@ -55,6 +55,9 @@ dependencies:
   geolocator: ^11.0.0
   webview_flutter: ^4.7.0
   geocoding: ^3.0.0
+  google_maps_flutter: ^2.5.3
+
+  flutter_map: ^6.1.0
 
 
 dev_dependencies:
@@ -75,6 +78,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/logo.png
+    - assets/images/LOGO1.JPG
     - assets/agd.wav
     - assets/jsu.mp3
   # The following line ensures that the Material Icons font is

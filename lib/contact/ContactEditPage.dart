@@ -74,7 +74,7 @@ class _ContactEditPageState extends State<ContactEditPage> {
             Center(
               child: CircleAvatar(
                 radius:50,
-                backgroundColor: Colors.pink[700],
+                backgroundColor: Colors.green[500],
                 child: Text(prenomController.text[0],
                   style: TextStyle(
                       color: Colors.white,
@@ -148,7 +148,12 @@ class _ContactEditPageState extends State<ContactEditPage> {
             ),
 
             SizedBox(height: 20),
-            ElevatedButton(onPressed: _updateContactData, child: Text('Update'))
+            Center(
+              child: ElevatedButton(onPressed: _updateContactData, child: Text('Update',style: TextStyle(
+                color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+              ),)),
+            )
 
           ],
         ),

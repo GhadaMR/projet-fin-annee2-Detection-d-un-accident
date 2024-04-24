@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
-          titleTextStyle: TextStyle(color: Colors.pink[800] , fontSize: 30, fontWeight: FontWeight.bold )
+          titleTextStyle: TextStyle(color: Colors.green[800] , fontSize: 30, fontWeight: FontWeight.bold )
         )
       ),
       debugShowCheckedModeBanner: false,

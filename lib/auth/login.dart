@@ -34,10 +34,18 @@ class _LoginState extends State<Login> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(height: 130),
-                  Center(child: Text("Login", style: TextStyle(fontSize:50, fontWeight:  FontWeight.bold),)),
+                  Container(height: 60),
+                  Center(
+                    child: Image.asset(
+                      'assets/images/LOGO1.JPG', // Chemin de votre image dans le dossier "assets"
+                      width: 200, // Largeur de l'image
+                      height: 150, // Hauteur de l'image
+                    ),
+                  ),
                   Container(height: 20),
-                  Text("email", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
+                 // Center(child: Text("Login", style: TextStyle(fontSize:50, fontWeight:  FontWeight.bold),)),
+                  Container(height: 20),
+                  Text("Email", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
                   CustomTextForm(hinttext: 'Enter your email',chiffre: TextInputType.emailAddress, password: false,mycontroller: email,validator: (val){
                     if(val== ""){
@@ -45,7 +53,7 @@ class _LoginState extends State<Login> {
                     }
                   },),
                   Container(height: 20),
-                  Text("password", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
+                  Text("Password", style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold)),
                   Container(height: 20),
                   CustomTextForm(hinttext: 'Enter your password',chiffre: TextInputType.text, password: true ,mycontroller: password,validator: (val){
                     if(val== ""){
@@ -136,7 +144,7 @@ class _LoginState extends State<Login> {
                   ),
                   TextSpan(
                     text: " Register",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.pink[900]),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green[500]),
                   ),
                 ]),
               ),

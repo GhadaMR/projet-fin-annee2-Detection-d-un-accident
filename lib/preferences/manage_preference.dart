@@ -71,14 +71,14 @@ class _ManagePreferenceState extends State<ManagePreference> {
               height: 200,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.pink[900],
+                color: Colors.green[50],
               ),
               child: Center(
                 child: Text(
                   '${user?.dureeAlarme}',
                   style: TextStyle(
                     fontSize: 78,
-                    color: Colors.white,
+
                   ),
                 ),
               ),
@@ -91,7 +91,10 @@ class _ManagePreferenceState extends State<ManagePreference> {
                   MaterialPageRoute(builder: (context) => EditPreferences(user: user,)),
                 );
               },
-              child: Text('Edit', style: TextStyle(fontSize: 20),),
+              child: Text('Edit', style: TextStyle(fontSize: 20,
+              color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+              ),),
             ),
             SizedBox(height: 20),
           ],

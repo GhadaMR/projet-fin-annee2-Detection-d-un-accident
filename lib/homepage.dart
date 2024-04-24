@@ -20,6 +20,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:background_sms/background_sms.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,6 +31,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  late GoogleMapController mapController; // Contrôleur de la carte
+  LatLng? _center; // Coordonnées du centre de la carte
+  Set<Marker> _markers = {}; // Marqueurs sur la carte
 
   Utilisateur? user ;
   @override
@@ -37,6 +41,43 @@ class _HomePageState extends State<HomePage> {
     fetchUserData();
     getData();
     super.initState();
+    _getUserLocation();
+  }
+
+  void _getUserLocation() async {
+    // Vérifiez d'abord si l'utilisateur a autorisé l'accès à la localisation
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      // Si l'accès à la localisation est refusé, demandez la permission
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        // Si l'utilisateur refuse toujours, ne continuez pas
+        return;
+      }
+    }
+
+    // Obtenez la position actuelle de l'utilisateur
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    // Mettez à jour _center avec les coordonnées de la position de l'utilisateur
+    setState(() {
+      _center = LatLng(position.latitude, position.longitude);
+      // Ajoutez un marqueur pour la position de l'utilisateur
+      _markers.add(
+        Marker(
+          markerId: MarkerId('user_location'),
+          position: _center!,
+          infoWindow: InfoWindow(title: 'Your Location'),
+        ),
+      );
+    });
+
+    // Déplacez la caméra de la carte pour montrer la position de l'utilisateur
+    mapController.animateCamera(CameraUpdate.newLatLng(_center!));
   }
 
   String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -262,41 +303,46 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             Container(height: 10,),
-            Text("Welcome", style: TextStyle(color: Colors.pink[800],
-                fontSize: 30,
+            Text("Welcome, ${user?.username}!", style: TextStyle(color: Colors.green[800],
+                fontSize: 25,
                 fontWeight: FontWeight.bold),),
             Container(height: 50,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Mode Tracking',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+
+            Container(
+              height: 200, // Hauteur de la carte
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: _center ?? LatLng(0, 0), // Centre de la carte (peut être nul au début)
+                  zoom: 15, // Zoom par défaut
                 ),
-                Switch(
-                  value: true,
-                  onChanged: (bool value) {
-                    if (value) {
-                      _sendLocation();
-                    }
-                  },
-                  activeColor: Colors.pink[800],
-                  inactiveThumbColor: Colors.pink[800],
-                ),
-              ],
+                markers: _markers, // Marqueurs sur la carte
+                onMapCreated: (GoogleMapController controller) {
+                  mapController = controller;
+                },
+              ),
             ),
+
             ElevatedButton(onPressed: () {
               String filePath = 'assets/jsu.mp3';
               String fileName = 'jsu.mp3';
               sendAudioFile(filePath, fileName);
-            },
-                child: const Text('Get Result')),
+            },style: ElevatedButton.styleFrom(
+              primary: Colors.blue, // Couleur de fond du bouton
+              onPrimary: Colors.white, // Couleur du texte du bouton
+            ),
+                child: const Text('Get Result',style: TextStyle(
+                  fontSize: 20,),)),
 
             ElevatedButton(
               onPressed: _sendLocation,
-              child: Text('Send My Location'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Couleur de fond du bouton
+                onPrimary: Colors.white, // Couleur du texte du bouton
+                ),
+              child: Text('Allow Tracking',style: TextStyle(
+                fontSize: 20, // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+              ),),
             ),
 
 
@@ -310,9 +356,14 @@ class _HomePageState extends State<HomePage> {
                 _currentAddress = await LocationHandler.getAddressFromLatLng(
                     _currentPosition!);
                 setState(() {});
-              },
-              child: const Text("Get Current Location"),
+              },style: ElevatedButton.styleFrom(
+              primary: Colors.blue, // Couleur de fond du bouton
+              onPrimary: Colors.white, // Couleur du texte du bouton
             ),
+              child: const Text("Get Current Location",style: TextStyle(
+                fontSize: 20,),),
+            ),
+
 
             ],
 
@@ -326,7 +377,8 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => Timer()),
           );
         },
-        child: Text('Alert'),
+        backgroundColor: Colors.green,
+        child: Text('Alert', style: TextStyle(color: Colors.white)),
       ),
     );
   }

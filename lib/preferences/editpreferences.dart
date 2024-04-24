@@ -65,7 +65,12 @@ class _EditPreferencesState extends State<EditPreferences> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _updateUserData,
-              child: Text('Save'),
+              child: Center(
+                child: Text('Save',style: TextStyle(
+                  color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                  // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+                ),),
+              ),
             ),
           ],
         ),

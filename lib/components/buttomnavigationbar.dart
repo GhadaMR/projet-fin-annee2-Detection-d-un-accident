@@ -19,6 +19,8 @@ class ButtomNavigationBar extends StatefulWidget {
 }
 
 class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
+  int _selectedIndex = 0; // Indice de la page actuellement sélectionnée
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -28,7 +30,11 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
       IconButton(
         icon: Icon(Icons.home),
         iconSize: 40,
+        color: _selectedIndex == 0 ?   Colors.green[800]: Colors.grey[800],
         onPressed: () {
+          setState(() {
+            _selectedIndex = 0; // Mettre à jour l'indice de la page actuelle
+          });
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
@@ -39,7 +45,11 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
     IconButton(
     icon: Icon(Icons.account_circle),
     iconSize: 40,
+      color: _selectedIndex == 1 ?   Colors.green[800]: Colors.grey[800],
     onPressed: () {
+      setState(() {
+        _selectedIndex = 1; // Mettre à jour l'indice de la page actuelle
+      });
     Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => ViewProfil()),
@@ -50,7 +60,11 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
     IconButton(
     icon: Icon(Icons.add),
     iconSize: 40,
-    onPressed: () {
+      color: _selectedIndex == 2 ?   Colors.green[800]: Colors.grey[800],
+      onPressed: () {
+        setState(() {
+          _selectedIndex = 2; // Mettre à jour l'indice de la page actuelle
+        });
     Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => AddContact()),
@@ -61,7 +75,12 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
     IconButton(
     icon: Icon(Icons.people),
     iconSize: 40,
-    onPressed: () {
+      color: _selectedIndex == 3 ?   Colors.green[800]: Colors.grey[800],
+
+      onPressed: () {
+      setState(() {
+        _selectedIndex = 3; // Mettre à jour l'indice de la page actuelle
+      });
     Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => ListContacts()),
@@ -72,7 +91,12 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
     IconButton(
     icon: Icon(Icons.list),
     iconSize: 40,
-    onPressed: () {
+      color: _selectedIndex == 4 ?   Colors.green[800]: Colors.grey[800],
+
+      onPressed: () {
+        setState(() {
+          _selectedIndex = 4; // Mettre à jour l'indice de la page actuelle
+        });
     showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
