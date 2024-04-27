@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                   ),
                   TextSpan(
                     text: " Register",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green[500]),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.tealAccent[400]),
                   ),
                 ]),
               ),

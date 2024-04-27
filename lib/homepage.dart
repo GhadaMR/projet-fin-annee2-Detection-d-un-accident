@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test/contact/add_contact.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_test/contact/list_contacts.dart';
 import 'package:firebase_test/envoyer_alerte.dart';
 import 'package:firebase_test/preferences/manage_preference.dart';
 import 'package:firebase_test/profil/profil.dart';
+import 'package:firebase_test/sound_recorder.dart';
 import 'package:firebase_test/view_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,15 @@ class _HomePageState extends State<HomePage> {
     getData();
     super.initState();
     _getUserLocation();
+    recorder.init();
+    player=AudioPlayer();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    recorder.dispose();
+    player.dispose();
+    super.dispose();
   }
 
   void _getUserLocation() async {
@@ -311,6 +322,10 @@ class _HomePageState extends State<HomePage> {
   get icon => null;
   String? _currentAddress;
   Position? _currentPosition;
+  bool isRecording=false;
+  final recorder=SoundRecorder();
+  late AudioPlayer player;
+  bool isPlaying=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -319,7 +334,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             Container(height: 10,),
-            Text("Welcome, ${user?.username}!", style: TextStyle(color: Colors.green[800],
+            Text("Welcome, ${user?.username}!", style: TextStyle(color: Colors.tealAccent[400],
                 fontSize: 25,
                 fontWeight: FontWeight.bold),),
             Container(height: 50,),
@@ -337,19 +352,19 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-<<<<<<< HEAD
+
 
             ElevatedButton(onPressed: () {
               String filePath = 'assets/jsu.mp3';
               String fileName = 'jsu.mp3';
               sendAudioFile(filePath, fileName);
             },style: ElevatedButton.styleFrom(
-              primary: Colors.blue, // Couleur de fond du bouton
-              onPrimary: Colors.white, // Couleur du texte du bouton
+              //primary: Colors.blue, // Couleur de fond du bouton
+            //  onPrimary: Colors.white, // Couleur du texte du bouton
             ),
                 child: const Text('Get Result',style: TextStyle(
                   fontSize: 20,),)),
-=======
+
             ElevatedButton(onPressed: () async{
               String filePath = 'assets/jsu.mp3';
               String fileName = 'jsu.mp3';
@@ -367,13 +382,13 @@ class _HomePageState extends State<HomePage> {
               }
             },
                 child: const Text('Get Result')),
->>>>>>> 9f9fe12d9a68b9de36e6bc6a9dc2457460c5a238
+
 
             ElevatedButton(
               onPressed: _sendLocation,
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Couleur de fond du bouton
-                onPrimary: Colors.white, // Couleur du texte du bouton
+                //primary: Colors.blue, // Couleur de fond du bouton
+              //  onPrimary: Colors.white, // Couleur du texte du bouton
                 ),
               child: Text('Allow Tracking',style: TextStyle(
                 fontSize: 20, // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
@@ -393,15 +408,54 @@ class _HomePageState extends State<HomePage> {
                     _currentPosition!);
                 setState(() {});
               },style: ElevatedButton.styleFrom(
-              primary: Colors.blue, // Couleur de fond du bouton
-              onPrimary: Colors.white, // Couleur du texte du bouton
+              //primary: Colors.blue, // Couleur de fond du bouton
+             // onPrimary: Colors.white, // Couleur du texte du bouton
             ),
               child: const Text("Get Current Location",style: TextStyle(
                 fontSize: 20,),),
             ),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: () async
+            {
+              if(isRecording==false) {
+                recorder.record();
+
+                setState(() {
+                  isRecording=true;
+                });
+              }
+              else{
+                recorder.stop();
+                setState(() {
+                  isRecording=false;
+                });
+              }
+            }, child: Text(isRecording ? 'Stop':'start')),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: ()async{
+              if(isRecording ==false&& isPlaying==false){
+
+                String audioPath=recorder.audioPath;
+
+                DeviceFileSource src=DeviceFileSource(audioPath);
+                player.play(src);
+                setState(() {
+                  isPlaying=true;
+                });
+              }
+              else{
+                player.stop();
+                setState(() {
+                  isPlaying=false;
+                });
+              }
 
 
-            ],
+            }, child: Text(isPlaying? 'Stop Playing': 'Start Playing'))
+
+
+
+          ],
 
         ),
       ),
@@ -413,7 +467,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => Timer()),
           );
         },
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.tealAccent[400],
         child: Text('Alert', style: TextStyle(color: Colors.white)),
       ),
     );

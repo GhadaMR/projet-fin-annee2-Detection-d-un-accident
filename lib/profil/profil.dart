@@ -79,7 +79,7 @@ class _ViewProfilState extends State<ViewProfil> {
                 Text(
                   '${user?.username}',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,
-                color: Colors.green[900], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                color: Colors.tealAccent[400], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
                   // Vous pouvez également personnaliser d'autres propriétés de texte ici.
                 ),
                 ),
@@ -106,7 +106,7 @@ class _ViewProfilState extends State<ViewProfil> {
                     );
                   },
                   child: Text('Edit profil',style: TextStyle(
-                    color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                    color: Colors.tealAccent[400], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
                     // Vous pouvez également personnaliser d'autres propriétés de texte ici.
                   ),),
                 ),

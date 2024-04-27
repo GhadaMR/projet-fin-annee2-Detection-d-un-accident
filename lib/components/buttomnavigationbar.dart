@@ -30,7 +30,7 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
       IconButton(
         icon: Icon(Icons.home),
         iconSize: 40,
-        color: _selectedIndex == 0 ?   Colors.green[800]: Colors.grey[800],
+        color: _selectedIndex == 0 ?   Colors.tealAccent[400]: Colors.grey[800],
         onPressed: () {
           setState(() {
             _selectedIndex = 0; // Mettre à jour l'indice de la page actuelle

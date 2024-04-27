@@ -45,7 +45,7 @@ dependencies:
   firebase_app_check: ^0.2.1+14
   awesome_dialog: ^3.2.0
   image_picker: ^1.0.7
-  uuid: ^4.3.3
+  uuid: ^3.0.7
   get: ^4.6.6
   circular_countdown_timer: ^0.2.3
   background_sms: ^0.0.4
@@ -57,7 +57,12 @@ dependencies:
   geocoding: ^3.0.0
   google_maps_flutter: ^2.5.3
 
-  flutter_map: ^6.1.0
+  flutter_map: ^5.0.0
+  flutter_sound: ^9.1.0
+  audioplayers: ^5.2.1
+  file_picker: ^8.0.0+1
+  path_provider: ^2.1.2
+  open_file: ^3.3.2
 
 
 dev_dependencies:

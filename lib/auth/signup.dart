@@ -184,7 +184,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   TextSpan(
                     text: "Login",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green[500]),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.tealAccent[400]),
                   ),
                 ]),
               ),

@@ -67,7 +67,7 @@ class _EditPreferencesState extends State<EditPreferences> {
               onPressed: _updateUserData,
               child: Center(
                 child: Text('Save',style: TextStyle(
-                  color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                  color: Colors.tealAccent[400], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
                   // Vous pouvez également personnaliser d'autres propriétés de texte ici.
                 ),),
               ),

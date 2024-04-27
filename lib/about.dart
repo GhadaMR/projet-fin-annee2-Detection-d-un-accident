@@ -14,7 +14,7 @@ class AboutUs extends StatelessWidget {
       body: Column(
         children: [
           Container(height: 50,),
-          Text("Who we are", style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.green),),
+          Text("Who are we", style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.tealAccent[400]),),
           Center(
             child: Image.asset(
               'assets/images/LOGO1.JPG', // Chemin de votre image dans le dossier "assets"

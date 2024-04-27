@@ -92,7 +92,7 @@ class _ManagePreferenceState extends State<ManagePreference> {
                 );
               },
               child: Text('Edit', style: TextStyle(fontSize: 20,
-              color: Colors.green[800], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+              color: Colors.tealAccent[400], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
                 // Vous pouvez également personnaliser d'autres propriétés de texte ici.
               ),),
             ),
