@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../auth/Utilisateur.dart';
+import '../components/buttomnavigationbar.dart';
 import '../components/custombuttonauth.dart';
 import '../components/textformfield.dart';
 
@@ -64,60 +65,101 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Profile'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(30.0),
+      bottomNavigationBar: ButtomNavigationBar(),
+     // appBar: AppBar(
+     //   title: Text('Edit Profile'),
+     // ),
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Username',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                )),
-            CustomTextForm(hinttext: 'Enter username',chiffre: TextInputType.text, password: false, mycontroller: usernameController,validator: (val){
-              if(val== ""){
-                return "Can't be empty";
-              }
-            },),
-            SizedBox(height: 20),
-            Text('Email',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                )),
-            CustomTextForm(hinttext: 'Enter email',chiffre: TextInputType.emailAddress, password: false, mycontroller: emailController,validator: (val){
-              if(val== ""){
-                return "Can't be empty";
-              }
-            },),
-            SizedBox(height: 20),
-            Text('Phone Number',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                )),
-            CustomTextForm(hinttext: 'Enter phone number',chiffre: TextInputType.number, password: false, mycontroller: phoneNumberController,validator: (val){
-              if(val== ""){
-                return "Can't be empty";
-              }
-            },),
-            SizedBox(height: 20),
-            Text('Image URL',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                )),
-            CustomTextForm(hinttext: 'Enter image Url',chiffre: TextInputType.text, password: false, mycontroller: imageUrlController,validator: (val){
-              if(val== ""){
-                return "Can't be empty";
-              }
-            },),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _updateUserData,
-              child: Text('Save'),
+            Container(
+              color:Colors.grey[100],
+              child: Row(
+
+                children: [
+                  const SizedBox(height: 59),
+                  const SizedBox(width: 15,),
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:  Color(0XFF47EAD0)
+                    ),
+                    child: Icon(CupertinoIcons.person_fill),
+                  ),
+                  const SizedBox(width: 8,),
+                  Column(
+                    children: [
+                      Text("Edit Profil",style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,color: Colors.grey..shade400),),
+                      //Text("${user?.username}",style: TextStyle(fontWeight:FontWeight.w600 ),)
+                    ],
+                  )
+
+                ],
+              ),
             ),
-          ],
-        ),
+            Container(height: 40),
+            Padding(
+            padding: EdgeInsets.all(30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Username :',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600
+                    )),
+                SizedBox(height: 10),
+                CustomTextForm(hinttext: 'Enter username',chiffre: TextInputType.text, password: false, mycontroller: usernameController,validator: (val){
+                  if(val== ""){
+                    return "Can't be empty";
+                  }
+                },),
+                SizedBox(height: 30),
+                Text('Email :',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    )),
+                SizedBox(height: 10),
+                CustomTextForm(hinttext: 'Enter email',chiffre: TextInputType.emailAddress, password: false, mycontroller: emailController,validator: (val){
+                  if(val== ""){
+                    return "Can't be empty";
+                  }
+                },),
+                SizedBox(height: 30),
+                Text('Phone Number :',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    )),
+                SizedBox(height: 10),
+                CustomTextForm(hinttext: 'Enter phone number',chiffre: TextInputType.number, password: false, mycontroller: phoneNumberController,validator: (val){
+                  if(val== ""){
+                    return "Can't be empty";
+                  }
+                },),
+                SizedBox(height: 30),
+                Text('Image URL :',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    )),
+                SizedBox(height: 10),
+                CustomTextForm(hinttext: 'Enter image Url',chiffre: TextInputType.text, password: false, mycontroller: imageUrlController,validator: (val){
+                  if(val== ""){
+                    return "Can't be empty";
+                  }
+                },),
+                SizedBox(height: 50),
+                Center(
+                  child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Color(0XFF47EAD0))),
+                    onPressed: _updateUserData,
+                    child: Text('Save',style: TextStyle(color:Colors.white,fontWeight: FontWeight.w600),),
+                  ),
+                ),
+              ],
+            ),
+          ),],
+        )
       ),
     );;
   }

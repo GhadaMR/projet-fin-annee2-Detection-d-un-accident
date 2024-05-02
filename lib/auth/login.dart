@@ -37,9 +37,9 @@ class _LoginState extends State<Login> {
                   Container(height: 60),
                   Center(
                     child: Image.asset(
-                      'assets/images/LOGO1.JPG', // Chemin de votre image dans le dossier "assets"
-                      width: 200, // Largeur de l'image
-                      height: 150, // Hauteur de l'image
+                      'assets/images/logo.jpeg', // Chemin de votre image dans le dossier "assets"
+                      width: 250, // Largeur de l'image
+                      height: 200, // Hauteur de l'image
                     ),
                   ),
                   Container(height: 20),
@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                   ),
                   TextSpan(
                     text: " Register",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.tealAccent[400]),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary),
                   ),
                 ]),
               ),

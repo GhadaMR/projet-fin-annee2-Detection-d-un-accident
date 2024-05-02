@@ -7,7 +7,6 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'auth/Utilisateur.dart';
 
 class Timer extends StatefulWidget {
@@ -221,7 +220,7 @@ class _TimerState extends State<Timer> {
               ringGradient: null,
 
               // Filling Color for Countdown Widget.
-              fillColor: Colors.pink[800]!,
+              fillColor: Theme.of(context).colorScheme.primary!,
 
               // Filling Gradient for Countdown Widget.
               fillGradient: null,
@@ -308,7 +307,7 @@ class _TimerState extends State<Timer> {
             );
               },
               style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.pink[700]),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
 
             ),
               child: const Text('Cancel', style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),

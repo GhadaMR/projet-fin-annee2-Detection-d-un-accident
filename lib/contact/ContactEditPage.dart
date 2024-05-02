@@ -74,7 +74,7 @@ class _ContactEditPageState extends State<ContactEditPage> {
             Center(
               child: CircleAvatar(
                 radius:50,
-                backgroundColor: Colors.tealAccent[400],
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 child: Text(prenomController.text[0],
                   style: TextStyle(
                       color: Colors.white,
@@ -84,30 +84,33 @@ class _ContactEditPageState extends State<ContactEditPage> {
               ),
             ),
             SizedBox(height: 50),
-            Text('Name',
+            Text('Name :',
             style: TextStyle(
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w600
             ),),
+            SizedBox(height: 10),
             CustomTextForm(hinttext: 'Enter name',chiffre: TextInputType.text, password: false, mycontroller: nomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
-            Text('First name',
+            Text('First name : ',
               style: TextStyle(
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.w600
               ),),
+            SizedBox(height: 10),
             CustomTextForm(hinttext: 'Enter first name',chiffre: TextInputType.text, password: false, mycontroller: prenomController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
               }
             },),
             SizedBox(height: 20),
-            Text('Phone Number',
+            Text('Phone Number :',
               style: TextStyle(
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.w600
               ),),
+            SizedBox(height: 10),
             CustomTextForm(hinttext: 'Enter phone number',chiffre: TextInputType.number, password: false, mycontroller: numController,validator: (val){
               if(val== ""){
                 return "Can't be empty";
@@ -125,7 +128,7 @@ class _ContactEditPageState extends State<ContactEditPage> {
               ),
               Text('Get Alerte',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.w600
                 ),),
             ],),
 
@@ -142,15 +145,17 @@ class _ContactEditPageState extends State<ContactEditPage> {
                 ),
                 Text('Tracking',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.w600
                   ),),
               ],
             ),
 
             SizedBox(height: 20),
             Center(
-              child: ElevatedButton(onPressed: _updateContactData, child: Text('Update',style: TextStyle(
-                color: Colors.tealAccent[400], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+              child: ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Color(0XFF47EAD0))),
+                  onPressed: _updateContactData, child: Text('Update',style: TextStyle(
+                color: Colors.white, // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
                 // Vous pouvez également personnaliser d'autres propriétés de texte ici.
               ),)),
             )

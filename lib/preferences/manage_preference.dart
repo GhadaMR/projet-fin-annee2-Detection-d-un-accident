@@ -23,6 +23,9 @@ class _ManagePreferenceState extends State<ManagePreference> {
   void initState() {
     fetchUserData();
     super.initState();
+    setState(() {
+
+    });
 
   }
 
@@ -59,47 +62,107 @@ class _ManagePreferenceState extends State<ManagePreference> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: user != null
-          ? Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Alarm Duration:", style: TextStyle(fontSize: 40, ),),
-            SizedBox(height: 30),
-            Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.green[50],
-              ),
-              child: Center(
-                child: Text(
-                  '${user?.dureeAlarme}',
-                  style: TextStyle(
-                    fontSize: 78,
+          ? SafeArea(
+            child: Column(
+              children: [
+                Container(
+                  color:Colors.grey[100],
+                  child: Row(
 
+                    children: [
+                      const SizedBox(height: 59),
+                      const SizedBox(width: 15,),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:  Color(0XFF47EAD0)
+                        ),
+                        child: Icon(CupertinoIcons.person_fill),
+                      ),
+                      const SizedBox(width: 8,),
+                      Column(
+                        children: [
+                          Text("Preferences",style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,color: Colors.grey..shade400),),
+                          //Text("${user?.username}",style: TextStyle(fontWeight:FontWeight.w600 ),)
+                        ],
+                      )
+
+                    ],
                   ),
                 ),
-              ),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EditPreferences(user: user,)),
-                );
-              },
-              child: Text('Edit', style: TextStyle(fontSize: 20,
-              color: Colors.tealAccent[400], // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
-                // Vous pouvez également personnaliser d'autres propriétés de texte ici.
-              ),),
-            ),
-            SizedBox(height: 20),
-          ],
-        ),
-      ) : Center(
+                Container(height: 40),
+                Container(
+                  width: 350,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+
+                    ),
+
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Alarm Duration:", style: TextStyle(fontSize: 40, ),),
+                          SizedBox(height: 30),
+                          Container(
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Theme.of(context).colorScheme.secondary,
+                                    Theme.of(context).colorScheme.primary,
+
+                                    Theme.of(context).colorScheme.tertiary,
+                                  ],
+                                )
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${user?.dureeAlarme}',
+                                style: TextStyle(
+                                  fontSize: 78,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white
+
+
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 40),
+                          ElevatedButton(
+                            style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Color(0XFF47EAD0))),
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => EditPreferences(user: user,)),
+                              );
+                            },
+                            child: Text('Edit', style: TextStyle(fontWeight: FontWeight.w600,
+                              color: Colors.white, // Couleur du texte du bouton (si onPrimary n'est pas utilisé)
+                              // Vous pouvez également personnaliser d'autres propriétés de texte ici.
+                            ),),
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ) : Center(
         child: CircularProgressIndicator(),
       ),
       bottomNavigationBar: ButtomNavigationBar(),

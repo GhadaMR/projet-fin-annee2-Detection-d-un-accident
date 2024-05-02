@@ -36,52 +36,55 @@ class _ListContactsState extends State<ListContacts> {
       appBar: AppBar(
         title: Text('Contacts'),
 
+
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemBuilder: (context,i){
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.pink[700],
-                      child: Text("${contacts[i]['first_name'][0]}",
-                              style: TextStyle(
-                                color: Colors.white
-                              ),
+      body:
+
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ListView.builder(
+                itemBuilder: (context,i){
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: Text("${contacts[i]['first_name'][0]}",
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        ),
                       ),
-                    ),
-                    title: Text("${contacts[i]['first_name']}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),
-                    ),
-                    subtitle: Text("${contacts[i]['phone_number']}"),
-                    trailing: SizedBox(
-                      width: 70,
+                      title: Text("${contacts[i]['first_name']}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      subtitle: Text("${contacts[i]['phone_number']}"),
+                      trailing: SizedBox(
+                        width: 70,
                         child: Row(
                           children: [
                             InkWell(child: Icon(Icons.edit),
-                                    onTap: (){
-                                      setState(() {
+                              onTap: (){
+                                setState(() {
 
-                                        contact = Contact(id_Contact: contacts[i].id,
-                                                  nom: contacts[i]['name'],
-                                                  prenom: contacts[i]['first_name'],
-                                                  num: contacts[i]['phone_number'],
-                                                  recoitAlerte: (contacts[i]['get_alert'] == true) ? true : false,
-                                                  tracking: (contacts[i]['tracking'] == true) ? true : false,
+                                  contact = Contact(id_Contact: contacts[i].id,
+                                    nom: contacts[i]['name'],
+                                    prenom: contacts[i]['first_name'],
+                                    num: contacts[i]['phone_number'],
+                                    recoitAlerte: (contacts[i]['get_alert'] == true) ? true : false,
+                                    tracking: (contacts[i]['tracking'] == true) ? true : false,
 
-                                        );
-                                      });
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => ContactEditPage(contact: contact,)),
-                                      );
+                                  );
+                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ContactEditPage(contact: contact,)),
+                                );
 
-                                    },
+                              },
                             ),
-                          SizedBox(width: 15,),
+                            SizedBox(width: 15,),
                             InkWell(child: Icon(Icons.delete),
                               onTap: () async {
                                 // Supprimer l'élément de la base de données Firebase
@@ -105,18 +108,21 @@ class _ListContactsState extends State<ListContacts> {
                           ],
                         ),
 
+                      ),
                     ),
-                  ),
 
-                );
-              },
-          itemCount: contacts.length,
-          scrollDirection: Axis.vertical,
-
+                  );
+                },
+                itemCount: contacts.length,
+                scrollDirection: Axis.vertical,
 
 
-        ),
-      ),
+
+              ),
+            ),
+
+
+
       bottomNavigationBar:ButtomNavigationBar(),
     );;
   }

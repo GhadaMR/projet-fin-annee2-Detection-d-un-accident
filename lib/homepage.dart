@@ -10,7 +10,9 @@ import 'package:firebase_test/sound_recorder.dart';
 import 'package:firebase_test/view_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'about.dart';
 import 'auth/Utilisateur.dart';
+import 'auth/login.dart';
 import 'components/buttomnavigationbar.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -329,6 +331,135 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //appBar: AppBar(),
+      bottomNavigationBar: ButtomNavigationBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddContact()),
+        );
+      },
+      child: Container(
+        width: 60,
+          height: 60,
+          child: const Icon(CupertinoIcons.add),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.secondary,
+                  Theme.of(context).colorScheme.primary,
+
+                  Theme.of(context).colorScheme.tertiary,
+                ],
+              )
+      ),
+      ),
+      shape: const CircleBorder(),
+      ),
+      body:SafeArea(
+          child: Column(
+          children: [
+            Container(
+              color:Colors.grey[100],
+              child: Row(
+
+                children: [
+                  const SizedBox(height: 59),
+                  const SizedBox(width: 15,),
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color:  Color(0XFF47EAD0)
+                    ),
+                    child: Icon(CupertinoIcons.person_fill),
+                  ),
+                  const SizedBox(width: 8,),
+                   Column(
+                    children: [
+                      Text("Welecome",style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,color: Colors.grey..shade400),),
+                      Text("${user?.username}",style: TextStyle(fontWeight:FontWeight.w600 ),)
+                    ],
+                  )
+
+                ],
+              ),
+            ),
+            Container(height: 40),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Center(
+                child:Column(
+                    children:[
+                      Image.asset(
+                        'assets/images/logo.jpeg', // Chemin de votre image dans le dossier "assets"
+                        width: 700, // Largeur de l'image
+                        height: 220, // Hauteur de l'image
+                      ),
+                      SizedBox(height:35),
+                      Container(
+                        width: 380,
+                        height: 200,
+                        decoration:  BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                               Radius.circular(20.0)
+                            ),
+
+                            shape: BoxShape.rectangle,
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context).colorScheme.secondary,
+                                Theme.of(context).colorScheme.primary,
+
+                                Theme.of(context).colorScheme.tertiary,
+                              ],
+                            )
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height:40),
+                            Text('Active Tracking Mode ',style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 23,
+                              color: Colors.white
+                            ),),
+                            SizedBox(height:20),
+                            Container(
+                              width: 60,
+                              height: 60,
+                              child: const Icon(Icons.location_on,size:40),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ]
+                )
+
+              ),
+            ),
+            // ElevatedButton(onPressed:   () {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => Timer()),
+            //   );
+            // }, child: Text('Alert'))
+          ],
+        ),
+      )
+      ,
+    );}
+  /*@override
+  Widget build(BuildContext context) {
+    return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(15),
         child: ListView(
@@ -471,7 +602,7 @@ class _HomePageState extends State<HomePage> {
         child: Text('Alert', style: TextStyle(color: Colors.white)),
       ),
     );
-  }
+  }*/
 
 }
 
