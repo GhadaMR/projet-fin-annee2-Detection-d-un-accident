@@ -86,6 +86,7 @@ flutter:
     - assets/images/LOGO1.JPG
     - assets/agd.wav
     - assets/jsu.mp3
+    - assets/alert.mp3
     - assets/images/logo.jpeg
     - assets/images/avatarF.png
     - assets/images/avatar.jpg

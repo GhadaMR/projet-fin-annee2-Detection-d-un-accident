@@ -446,12 +446,12 @@ class _HomePageState extends State<HomePage> {
 
               ),
             ),
-            // ElevatedButton(onPressed:   () {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(builder: (context) => Timer()),
-            //   );
-            // }, child: Text('Alert'))
+            ElevatedButton(onPressed:   () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Timer()),
+              );
+            }, child: Text('Alert'))
           ],
         ),
       )

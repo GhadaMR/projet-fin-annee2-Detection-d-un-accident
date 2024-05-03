@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:background_sms/background_sms.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,13 +23,24 @@ class _TimerState extends State<Timer> {
   final CountDownController _controller = CountDownController();
 
   Utilisateur? user ;
+  late AudioPlayer player;
+  String audioAlertPath='alert.mp3';
+
 
   @override
   void initState() {
     fetchUserData();
     getData();
     super.initState();
+    player=AudioPlayer();
 
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    player.dispose();
+    super.dispose();
   }
 
   String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -220,7 +232,7 @@ class _TimerState extends State<Timer> {
               ringGradient: null,
 
               // Filling Color for Countdown Widget.
-              fillColor: Theme.of(context).colorScheme.primary!,
+              fillColor: Colors.red!,
 
               // Filling Gradient for Countdown Widget.
               fillGradient: null,
@@ -263,6 +275,9 @@ class _TimerState extends State<Timer> {
               onStart: () {
                 // Here, do whatever you want
                 debugPrint('Countdown Started');
+                player.setSourceAsset(audioAlertPath);
+                AssetSource src=AssetSource(audioAlertPath);
+                player.play(src);
               },
 
               // This Callback will execute when the Countdown Ends.
@@ -270,7 +285,9 @@ class _TimerState extends State<Timer> {
                 // Here, do whatever you want
                 _controller.pause(); // Pause the countdown
                 _sendLocation(); // Send location
+                player.stop();
                 debugPrint('Countdown Ended');
+
 
 
 
@@ -301,13 +318,14 @@ class _TimerState extends State<Timer> {
             width:200 ,
             height: 120,
             child: ElevatedButton(onPressed: () { _controller.pause();
+            player.stop();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage()),
             );
               },
               style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
 
             ),
               child: const Text('Cancel', style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),
