@@ -189,7 +189,10 @@ class _AddContactState extends State<AddContact> {
                         tracking=false;
                       });
                     }
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListContacts()),
+                    );
                   }catch (error) {
                     print("Erreur lors de l'ajout du contact: $error");}
                 },

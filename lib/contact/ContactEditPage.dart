@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/contact/list_contacts.dart';
 import 'package:flutter/material.dart';
 
 import '../components/textformfield.dart';
@@ -48,6 +49,10 @@ class _ContactEditPageState extends State<ContactEditPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Contact data updated successfully')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ListContacts()),
       );
     }catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

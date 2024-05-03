@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/profil/profil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../auth/Utilisateur.dart';
@@ -53,6 +54,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User data updated successfully')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ViewProfil()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

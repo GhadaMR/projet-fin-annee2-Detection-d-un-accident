@@ -7,6 +7,7 @@ import '../auth/Utilisateur.dart';
 import '../components/buttomnavigationbar.dart';
 import '../components/custombuttonauth.dart';
 import '../components/textformfield.dart';
+import 'manage_preference.dart';
 class EditPreferences extends StatefulWidget {
   final Utilisateur? user;
   const EditPreferences({Key? key, required this.user}) : super(key: key);
@@ -21,6 +22,9 @@ class _EditPreferencesState extends State<EditPreferences> {
   void initState() {
     super.initState();
     dureeAlerteController.text = widget.user!.dureeAlarme.toString();
+    setState(() {
+
+    });
   }
 
 
@@ -37,6 +41,10 @@ class _EditPreferencesState extends State<EditPreferences> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User data updated successfully')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ManagePreference()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
