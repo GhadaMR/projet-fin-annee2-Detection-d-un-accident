@@ -430,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               width: 60,
                               height: 60,
-                              child: const Icon(Icons.location_on,size:40),
+                              child:  IconButton(icon:Icon(Icons.location_on,size:40),onPressed:_sendLocation),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,
